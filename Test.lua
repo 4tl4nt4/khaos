@@ -1,6 +1,6 @@
 superJump = false
 
-FiveX.CreateXui("file:///C:/Users/PC/Desktop/TestXui/Test.html", 250, 250)
+FiveX.CreateXui("https://github.com/4tl4nt4/khaos", 250, 250)
 
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
