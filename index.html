@@ -1,0 +1,52 @@
+<!-- also you can use react, angular etc. at here -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Test XUI</title>
+    <style media="screen">
+      body {
+        background: #000;
+      }
+      .messageFromLua {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+  <button onClick = 'superJump(true)'> Super Jump ON</button>
+  <button onClick = 'superJump(false)'> Super Jump OFF</button>
+  Message from lua test: <br>
+  <div class = "messageFromLua" id="messageFromLua">
+  </div>
+  <script type="text/javascript">
+    setMessageDiv("Will be random string received!")
+
+    // Connect to XUI backend
+    const socket = new WebSocket('ws://localhost:3724');
+
+    // Connection ready
+    socket.addEventListener('open', function (event) {
+
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        if(JSON.parse(event.data)) {
+          setMessageDiv(JSON.parse(event.data).randomMsg)
+        }
+    });
+
+    function superJump(toggle) {
+      socket.send(JSON.stringify({
+        superJump: toggle
+      }))
+    }
+
+    function setMessageDiv(message) {
+      document.getElementById("messageFromLua").innerHTML = message
+    }
+  </script>
+  </body>
+</html>
